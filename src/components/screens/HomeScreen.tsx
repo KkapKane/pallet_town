@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { switchDisplay } from '../../redux/slices/displaySlice';
 import { setPlayerName } from '../../redux/slices/playerSlice';
-import type { RootState } from '../../redux/store';
+
 
 export default function HomeScreen() {
 

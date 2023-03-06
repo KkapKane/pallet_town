@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  PlayerName: ''
+  PlayerName: '',
+  starterPokemon: ''
 };
 
 export const playerSlice = createSlice({
@@ -9,11 +10,13 @@ export const playerSlice = createSlice({
   initialState,
   reducers: {
     setPlayerName: (state, action) => {
-      state.PlayerName = action.payload}
-  }
+      state.PlayerName = action.payload},
+    setStarterPokemon: (state, action) => {
+      state.starterPokemon = action.payload}
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const { setPlayerName } = playerSlice.actions;
+export const { setPlayerName, setStarterPokemon } = playerSlice.actions;
 
 export default playerSlice.reducer;

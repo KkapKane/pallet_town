@@ -1,15 +1,18 @@
 import { Box } from '@mui/material';
 import type { RootState } from '../../redux/store';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import professorOak from '../../assets/professorOak.png';
 import oak2 from '../../assets/oak2.png';
 import { useEffect, useState } from 'react';
 import Dialog from '../gameMechanics/Dialog';
 import { Pokemon } from '../Pokemon';
+import {HiOutlineArrowRight} from 'react-icons/hi'
 
 export default function GameScreen() {
   const displayState = useSelector((state: RootState) => state.display.value);
   const dialogState = useSelector((state: RootState) => state.dialogIndex.index);
+
+  
 
   const [oakPos, setOakPos] = useState({ oak1: '-100%', oak2: '-100%' });
 
@@ -28,9 +31,17 @@ export default function GameScreen() {
         setOakPos({ ...oakPos, oak2: '0%' });
       });
     }
-  });
+    else if(dialogState == 4) {
+      setOakPos({ ...oakPos, oak2: '40%' });
+
+    }
+    else if(dialogState == 5) {
+      setOakPos({...oakPos, oak2: '0%'})
+    }
+  },[dialogState]);
 
   const starterPokemon = ['charmander', 'squirtle', 'bulbasaur'];
+  const evolutionExample = ['charmander', 'charmeleon', 'charizard'];
 
   const styles = {
     mainScreenStyle: {
@@ -64,19 +75,44 @@ export default function GameScreen() {
     },
     pokemonContainer: {
       display: 'flex',
+      justifyContent: "space-around",
+      
+      alignItems: "center",
       position: 'absolute',
-      width: "100%",
-      justifyContent: "space-evenly",
+      width: { lg: '80%', md: '70%', sm: '100%', xs: '100%' },
+     
       top: '10%',
-      border: "1px solid black"
+  
     }
   };
+
+ 
+
   return (
     <Box sx={styles.mainScreenStyle}>
       <Box sx={styles.pokemonContainer}>
-        {dialogState == 2
+        {dialogState == 2 || dialogState == 5
           ? starterPokemon.map((pokemon) => {
               return <Pokemon name={pokemon} />;
+            })
+          : null}
+      </Box>
+      <Box sx={{ height: '100', border: '1px solid black' }}></Box>
+      <Box sx={styles.pokemonContainer}>
+        {dialogState == 3
+          ? evolutionExample.map((pokemon, index) => {
+              return (
+                <>
+                  {index == evolutionExample.length - 1 ? (
+                    <Pokemon name={pokemon} />
+                  ) : (
+                    <>
+                      {' '}
+                      <Pokemon name={pokemon} /> <HiOutlineArrowRight />{' '}
+                    </>
+                  )}
+                </>
+              );
             })
           : null}
       </Box>
