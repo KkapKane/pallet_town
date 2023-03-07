@@ -23,17 +23,24 @@ const dispatch = useDispatch();
     }, [])
 
     const styles = {
-        battleContainer: {
-            position: "relative",
-            
-            
-        },
-        oak: {
-            position: "absolute",
-            left: oakPos.leftPos,
-            transition: "3000ms"
-        }
-    }
+      battleContainer: {
+        backgroundColor: "red",
+        display: "flex",
+        flexDirection: 'column',
+        position: 'absolute',
+        top: '0%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        width: '100vw'
+      },
+      oak: {
+        position: 'absolute',
+        top: "0%",
+        left: oakPos.leftPos,
+        transition: '3000ms'
+      }
+    };
     return (
         <Box sx={styles.battleContainer}>
             <Box component="img" src={professorOak} sx={styles.oak}/>

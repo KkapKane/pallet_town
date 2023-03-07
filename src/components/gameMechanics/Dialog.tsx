@@ -26,12 +26,17 @@ export default function Dialog() {
     `good luck....`
   ];
 
-  const battleDialog = [
-    "Professor Oak wants a battle!"
-  ]
+  const battleDialog = ['Professor Oak wants a battle!'];
   useEffect(() => {
     if (displayState == 'Game') {
       dispatch(increment());
+      const delayedDialog = setTimeout(() => {
+        setDialogPos('-35%');
+      }, 1500);
+      return () => clearTimeout(delayedDialog);
+    }
+    if (displayState == 'Battle') {
+      
       const delayedDialog = setTimeout(() => {
         setDialogPos('-35%');
       }, 1500);

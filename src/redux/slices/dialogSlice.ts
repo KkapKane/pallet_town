@@ -25,6 +25,9 @@ export const dialogSlice = createSlice({
     decrement: (state) => {
       state.index -= 1;
     },
+    reset: (state) =>{
+      state.index = 0;
+    },
     switchMode: (state, action) => {
       state.mode = action.payload
     }
@@ -33,6 +36,6 @@ export const dialogSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, switchMode } = dialogSlice.actions;
+export const { increment, decrement, switchMode, reset } = dialogSlice.actions;
 
 export default dialogSlice.reducer;
