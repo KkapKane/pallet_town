@@ -2,15 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 export interface DialogState {
+  mode: string;
   index: number;
 }
 
 const initialState: DialogState = {
+  mode: "intro",
   index: -1
 };
 
 export const dialogSlice = createSlice({
-  name: 'dialogIndex',
+  name: 'dialog',
   initialState,
   reducers: {
     increment: (state) => {
@@ -23,12 +25,14 @@ export const dialogSlice = createSlice({
     decrement: (state) => {
       state.index -= 1;
     },
-    
+    switchMode: (state, action) => {
+      state.mode = action.payload
+    }
     
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement } = dialogSlice.actions;
+export const { increment, decrement, switchMode } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

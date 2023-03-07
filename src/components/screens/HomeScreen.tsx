@@ -2,8 +2,8 @@ import { Box, TextField, Typography, Button } from '@mui/material';
 
 import pokemonLogo from '../../assets/pokemonlogo.png';
 import background from '../../assets/background.jpg';
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch,  } from 'react-redux';
 import { switchDisplay } from '../../redux/slices/displaySlice';
 import { setPlayerName } from '../../redux/slices/playerSlice';
 
@@ -14,12 +14,11 @@ export default function HomeScreen() {
   const [name, setName] = useState("")
 
   const dispatch = useDispatch()
-  const inputRef = useRef(null)
   const transition = () => {
     
     
     setOpacity(0)
-    dispatch(switchDisplay())
+    dispatch(switchDisplay("Game"))
     dispatch(setPlayerName(name))
     
   };

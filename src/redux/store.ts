@@ -9,7 +9,7 @@ export const store = configureStore({
     // Redux
     display: displayReducer,
     player: playerReducer,
-    dialogIndex: dialogReducer,
+    dialog: dialogReducer,
     // Services
     [pokemonApi.reducerPath]: pokemonApi.reducer
   },

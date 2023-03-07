@@ -1,57 +1,54 @@
-import { useGetPokemonByNameQuery } from "../redux/pokemonService"
-import { setStarterPokemon } from "../redux/slices/playerSlice";
-import type { RootState } from "../redux/store"
+import { useGetPokemonByNameQuery } from '../redux/pokemonService';
+import { setStarterPokemon } from '../redux/slices/playerSlice';
+import type { RootState } from '../redux/store';
 import { Box, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-export const Pokemon = ({ name }: { name: string }) => {
-  const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery(name, {
-    
-  });
-  const dispatch = useDispatch();
-  const dialogState = useSelector((state: RootState) => state.dialogIndex.index);
-    const showAffinity = () => {
-      if (dialogState == 2) {
-        return 'flex';
-      } else {
-        return 'none';
-      }
-    };
-    const highlightChoice = () => {
-      if(dialogState == 5){
-        return {
-          outline: "1px solid black",
-          backgroundColor: "lightGray"
-        }
-      }
-    }
 
-   
+export const Pokemon = ({ name }: { name: string }) => {
+  const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery(name, {});
+
+  const dispatch = useDispatch();
+  const dialogIndex= useSelector((state: RootState) => state.dialog.index);
+  const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
+  const [isSelected, setIsSelected] = useState<string | undefined | null>(null);
+
+  const selectPokemon = (name: string | undefined) => {
+    if (!data) return;
+    dispatch(setStarterPokemon(data));
+    setIsSelected(name);
+  };
+
+  useEffect(() => {
+    console.log(starterPokemonState);
+  }, [starterPokemonState]);
+
   const styles = {
     pokemonContainer: {
       display: 'flex',
-      "&:hover" : () => highlightChoice(), 
-      },
+      backgroundColor: isSelected === starterPokemonState?.name ? 'red' : 'white'
+    },
     pokemonImage: {
       height: { lg: '200px', md: '200px', sm: '200px', xs: '150px' }
     },
     pokemonLabel: {
-      fontSize: {lg: "40px", md: "35px", sm: "30px", xs: "12px"}
+      fontSize: { lg: '40px', md: '35px', sm: '30px', xs: '12px' }
     },
     pokemonLabel2: {
-      display: () => showAffinity(),
-      fontSize: {lg: "30px", md: "25px", sm: "20px", xs: "20px"}
+      display: dialogIndex === 2 ? 'flex' : 'none',
+      fontSize: { lg: '30px', md: '25px', sm: '20px', xs: '20px' }
     }
   };
-  return (
-    <Box sx={styles.pokemonContainer}>
 
+  return (
+    <Box sx={styles.pokemonContainer} onClick={() => selectPokemon(data?.species.name)}>
       {error ? (
         <>Oh no, there was an error</>
-        ) : isLoading ? (
-          <>Loading...</>
-          ) : data ? (
-            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: "center"}}>
-          <Box component="img" src={data.sprites.front_default} alt={data.species.name} sx={styles.pokemonImage} onClick={() => dispatch(setStarterPokemon(data.species.name))}/>
+      ) : isLoading ? (
+        <>Loading...</>
+      ) : data ? (
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Box component="img" src={data.sprites.front_default} alt={data.species.name} sx={styles.pokemonImage} />
           <Typography sx={styles.pokemonLabel}>
             {data.species.name.toUpperCase()} {isFetching ? '...' : ''}
           </Typography>
@@ -60,11 +57,6 @@ export const Pokemon = ({ name }: { name: string }) => {
           </Typography>
         </Box>
       ) : null}
-      </Box>
+    </Box>
   );
-
-
-
-
-
 };

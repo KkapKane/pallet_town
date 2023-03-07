@@ -10,8 +10,8 @@ export const displaySlice = createSlice({
   name: 'display',
   initialState,
   reducers: {
-   switchDisplay: (state) => {
-    state.value = "Game"
+   switchDisplay: (state, action) => {
+    state.value = action.payload
    },
    
   }
