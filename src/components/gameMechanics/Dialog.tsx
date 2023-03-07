@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography, Button } from '@mui/material';
 import dialogBox from '../../assets/dialogBox.png';
 import { useState, useEffect } from 'react';
-import { increment, decrement } from '../../redux/slices/dialogSlice';
+import { increment, decrement, reset } from '../../redux/slices/dialogSlice';
 
 export default function Dialog() {
   const [dialogPos, setDialogPos] = useState('-100%');
@@ -12,7 +12,7 @@ export default function Dialog() {
   const playerState = useSelector((state: RootState) => state.player.playerName);
   const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
   const displayState = useSelector((state: RootState) => state.display.value);
-  const dialogState = useSelector((state: RootState) => state.dialog.index);
+  const {index: dialogIndex, mode: dialogMode} = useSelector((state: RootState) => state.dialog);
   const dispatch = useDispatch();
   const gameDialog = [
     `Well, hello there, young trainer ${playerState}! It's a pleasure to meet you. I am Professor Oak, but most folks just call me "Professor". Are you prepared to dive into the captivating world of Pokémon?`,
@@ -25,8 +25,17 @@ export default function Dialog() {
     `Now that you have chosen your first Pokémon, lets see what ${starterPokemonState?.name} can do. Are you ready?`,
     `good luck....`
   ];
-
+  
   const battleDialog = ['Professor Oak wants a battle!'];
+
+
+  useEffect(() => {
+    if(dialogMode == "battle"){
+      dispatch(reset())
+    }
+
+  },[])
+
   useEffect(() => {
     if (displayState == 'Game') {
       dispatch(increment());
@@ -47,7 +56,7 @@ export default function Dialog() {
 
   const timer = (ms: any) => new Promise((res) => setTimeout(res, ms));
   async function grabText() {
-    let split = gameDialog[dialogState].split('');
+    let split = dialogMode == 'intro' ? gameDialog[dialogIndex].split('') : battleDialog[dialogIndex].split(''); 
     for (var i = 0; i < split.length; i++) {
       setVisibleDialog((oldArray: string[]) => [...oldArray, split[i]]);
       await timer(0); // ideal speed is 30
@@ -57,29 +66,33 @@ export default function Dialog() {
   let popupSpeed = 2500;
 
   useEffect(() => {
-    if (dialogState > 0) {
+    if (dialogIndex > 0) {
       popupSpeed = 1000;
     }
     setVisibleDialog([]);
-    if (dialogState < 0) return;
+    if (dialogIndex < 0) return;
     delayedSpeech = setTimeout(() => {
       grabText();
     }, popupSpeed);
     return () => clearInterval(delayedSpeech);
-  }, [dialogState]);
+  }, [dialogIndex]);
 
   const traverseDialog = (direction: string) => {
-    if (direction == 'forward' && gameDialog[dialogState].split('').length == visibleDialog.length) {
-      if (dialogState == gameDialog.length - 1) return;
+  
+
+    if (direction == 'forward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
+      if (dialogIndex == gameDialog.length - 1) return;
       dispatch(increment());
-    } else if (direction == 'backward' && gameDialog[dialogState].split('').length == visibleDialog.length) {
-      if (dialogState == 0) return;
+    } else if (direction == 'backward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
+      if (dialogIndex == 0) return;
       dispatch(decrement());
     }
+  
+  
   };
 
   function waitingOnPlayer() {
-    if ((dialogState == 5 && starterPokemonState?.name == null) || '') {
+    if ((dialogIndex == 5 && starterPokemonState?.name == null) || '') {
       return 'none';
     } else {
       return 'flex';
@@ -132,7 +145,7 @@ export default function Dialog() {
       </Typography>
       <Box component="img" src={dialogBox} sx={styles.dialogImgSrc} />
       <Button sx={styles.nextButton} onClick={() => traverseDialog('forward')}>
-        {dialogState == 7 ? 'ready' : 'next'}
+        {dialogIndex == 7 ? 'ready' : 'next'}
       </Button>
       <Button sx={styles.backButton} onClick={() => traverseDialog('backward')}>
         Prev
