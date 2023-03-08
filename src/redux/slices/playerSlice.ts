@@ -6,6 +6,7 @@ interface Pokemon {
   base_experience: number;
   height: number;
   weight: number;
+  moves: any
   abilities: {
     ability: {
       name: string;
@@ -36,11 +37,13 @@ interface Pokemon {
 interface PlayerState {
   playerName: string;
   starterPokemon: Pokemon | null ;
+  chosenAttack: string | null
 }
 
 const initialState: PlayerState = {
   playerName: '',
-  starterPokemon: null
+  starterPokemon: null,
+  chosenAttack: null
 };
 
 export const playerSlice = createSlice({
@@ -52,11 +55,14 @@ export const playerSlice = createSlice({
     },
     setStarterPokemon: (state, action) => {
       state.starterPokemon = action.payload;
+    },
+    setChosenAttack: (state, action) => {
+      state.chosenAttack = action.payload
     }
   }
 });
 
 // Action creators are generated for each case reducer function
-export const { setPlayerName, setStarterPokemon } = playerSlice.actions;
+export const { setPlayerName, setStarterPokemon, setChosenAttack } = playerSlice.actions;
 
 export default playerSlice.reducer;

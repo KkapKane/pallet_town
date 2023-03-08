@@ -4,15 +4,22 @@ import { Box, Typography, Button } from '@mui/material';
 import dialogBox from '../../assets/dialogBox.png';
 import { useState, useEffect } from 'react';
 import { increment, decrement, reset } from '../../redux/slices/dialogSlice';
+import { useGetPokemonByNameQuery } from '../../redux/pokemonService';
+import AttackOptions from './AttackOptions';
 
 export default function Dialog() {
+  interface DialogState {
+  index: number;
+  mode: string;
+}
   const [dialogPos, setDialogPos] = useState('-100%');
 
   const [visibleDialog, setVisibleDialog]: any = useState<string[]>([]);
-  const playerState = useSelector((state: RootState) => state.player.playerName);
+  const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery('mew', {});
+  const {playerName: playerState, chosenAttack: chosenAttack } = useSelector((state: RootState) => state.player);
   const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
   const displayState = useSelector((state: RootState) => state.display.value);
-  const {index: dialogIndex, mode: dialogMode} = useSelector((state: RootState) => state.dialog);
+  const {index: dialogIndex, mode: dialogMode}: DialogState = useSelector((state: RootState) => state.dialog);
   const dispatch = useDispatch();
   const gameDialog = [
     `Well, hello there, young trainer ${playerState}! It's a pleasure to meet you. I am Professor Oak, but most folks just call me "Professor". Are you prepared to dive into the captivating world of Pokémon?`,
@@ -26,7 +33,14 @@ export default function Dialog() {
     `good luck....`
   ];
   
-  const battleDialog = ['Professor Oak wants a battle!'];
+  const battleDialog = ['Professor Oak wants a battle!',
+                        `Professor Oak sent out ${data?.name}!`,
+                        `${playerState}: Go! ${starterPokemonState?.name}!`,
+                        '',
+                        `${starterPokemonState?.name} uses ${chosenAttack}!`,
+                        `It's very effective!`,
+                        `${playerState} defeated Professor Oak!!`                        
+];
 
 
   useEffect(() => {
@@ -59,13 +73,14 @@ export default function Dialog() {
     let split = dialogMode == 'intro' ? gameDialog[dialogIndex].split('') : battleDialog[dialogIndex].split(''); 
     for (var i = 0; i < split.length; i++) {
       setVisibleDialog((oldArray: string[]) => [...oldArray, split[i]]);
-      await timer(0); // ideal speed is 30
+      await timer(30); // ideal speed is 30
     }
   }
 
   let popupSpeed = 2500;
 
   useEffect(() => {
+    console.log(dialogIndex)
     if (dialogIndex > 0) {
       popupSpeed = 1000;
     }
@@ -78,21 +93,34 @@ export default function Dialog() {
   }, [dialogIndex]);
 
   const traverseDialog = (direction: string) => {
-  
+    
+    if(dialogMode == "intro"){
 
-    if (direction == 'forward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
-      if (dialogIndex == gameDialog.length - 1) return;
-      dispatch(increment());
-    } else if (direction == 'backward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
-      if (dialogIndex == 0) return;
-      dispatch(decrement());
+      if (direction == 'forward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
+        if (dialogIndex == gameDialog.length - 1) return;
+        dispatch(increment());
+      } else if (direction == 'backward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
+        if (dialogIndex == 0) return;
+        dispatch(decrement());
+      }
     }
+    if(dialogMode == "battle"){
+      
+      if (direction == 'forward' && battleDialog[dialogIndex].split('').length == visibleDialog.length) {
+        if (dialogIndex == battleDialog.length - 1) return;
+        dispatch(increment());
+      } else if (direction == 'backward' && battleDialog[dialogIndex].split('').length == visibleDialog.length) {
+        if (dialogIndex == 0) return;
+        dispatch(decrement());
+      }
+    }
+
   
   
   };
 
   function waitingOnPlayer() {
-    if ((dialogIndex == 5 && starterPokemonState?.name == null) || '') {
+    if ((dialogIndex == 5 && starterPokemonState?.name == null)  || dialogIndex >= 3 && dialogMode == "battle") {
       return 'none';
     } else {
       return 'flex';
@@ -131,6 +159,7 @@ export default function Dialog() {
       zIndex: 99
     },
     backButton: {
+      display: () => waitingOnPlayer(),
       color: 'black',
       position: 'absolute',
       bottom: '10%',
@@ -143,6 +172,7 @@ export default function Dialog() {
       <Typography align="left" fontSize={{ lg: 30, md: 20, sm: 30, xs: 14 }} sx={styles.dialogText}>
         {visibleDialog}
       </Typography>
+      <AttackOptions />
       <Box component="img" src={dialogBox} sx={styles.dialogImgSrc} />
       <Button sx={styles.nextButton} onClick={() => traverseDialog('forward')}>
         {dialogIndex == 7 ? 'ready' : 'next'}

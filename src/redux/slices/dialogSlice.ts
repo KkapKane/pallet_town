@@ -8,7 +8,7 @@ export interface DialogState {
 
 const initialState: DialogState = {
   mode: "intro",
-  index: -1
+  index: 4
 };
 
 export const dialogSlice = createSlice({
