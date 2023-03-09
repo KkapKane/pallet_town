@@ -46,6 +46,7 @@ export const screen = (currentBG: string) => ({
 export const uiContainer = () => ({
   display: 'flex',
   height: '60px',
+  fontSize: "2rem",
   width: { lg: '70%', md: '.7', sm: '60%', xs: '60%' },
   border: '1px solid black'
 });

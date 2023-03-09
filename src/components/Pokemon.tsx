@@ -5,6 +5,7 @@ import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+
 export const Pokemon = ({ name }: { name: string }) => {
   const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery(name, {});
 
@@ -15,6 +16,7 @@ export const Pokemon = ({ name }: { name: string }) => {
 
   const selectPokemon = (name: string | undefined) => {
     if (!data) return;
+    if(dialogIndex == 5 )
     dispatch(setStarterPokemon(data));
     setIsSelected(name);
   };

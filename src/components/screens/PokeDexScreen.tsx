@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import pokeDexSvg from '../../assets/images/pokedex.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import dark from '../../assets/backgroundTypes/dark.png';
 import bug from '../../assets/backgroundTypes/bug.jpg';
