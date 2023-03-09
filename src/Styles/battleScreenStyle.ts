@@ -9,7 +9,7 @@ export const getBattleContainerStyle = () => ({
   alignItems: 'center',
   height: '100vh',
   width: '100vw',
-  overflow: 'hidden'
+  
 });
 
 export const getOakStyle = (oakPos: OakPosState) => ({

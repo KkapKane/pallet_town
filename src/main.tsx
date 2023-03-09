@@ -4,7 +4,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Provider } from 'react-redux';
 import { store } from './redux/store';
 import { ToastContainer } from 'react-toastify';
-
+import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '@fontsource/roboto/300.css';

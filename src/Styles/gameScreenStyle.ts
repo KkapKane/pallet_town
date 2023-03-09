@@ -14,9 +14,10 @@ export const getMainScreenStyle = (displayState: string, oakPos: OakType) => ({
   left: oakPos.oak1,
   justifyContent: 'center',
   alignItems: 'center',
+  alignContent: "flex-start",
   height: '100vh',
-  width: '100vw',
-  overflow: 'hidden'
+  width: '100%',
+  
 });
 
 export const getOak1Style = (dialogState: number) => ({

@@ -1,0 +1,8 @@
+/* This file should not be used 99.98% of the time. */
+/* If you find yourself needing to write css, check out */
+/* https://mui.com/material-ui/customization/how-to-customize/ */
+/* Most common method we use are "the sx prop" & "reusable component" */
+
+body {
+  overflow: hidden;
+}
