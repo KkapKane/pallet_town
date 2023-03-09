@@ -126,7 +126,12 @@ export default function GameScreen() {
         })}
       </Box>
       <PokemonContainer dialogIndex={dialogIndex} />
-      {dialogIndex === 5 && displayState == "Game" ? <Typography sx={{ position: "absolute", top: {lg: "50%", md: "50%", sm: "50%" , xs: "40%"},fontSize: "2rem"}}> CLICK ON ONE OF THE POKEMON</Typography> : null}
+      {dialogIndex === 5 && displayState == 'Game' ? (
+        <Typography sx={{ position: 'absolute', top: { lg: '50%', md: '50%', sm: '50%', xs: '40%' }, fontSize: { lg: '2rem', md: '2rem', sm: '1rem', xs: '1rem' } }}>
+          {' '}
+          CLICK ON ONE OF THE POKEMON
+        </Typography>
+      ) : null}
       <Box component="img" src={professorOak} sx={styles.oak1} />
       <Box component="img" src={oak2} sx={styles.oak2} />
       <Box component="img" src={pokeDex} sx={styles.pokeDexStyle} onClick={() => transitionToPokeDexScreen()} />

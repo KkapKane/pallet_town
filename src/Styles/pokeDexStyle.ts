@@ -45,16 +45,18 @@ export const screen = (currentBG: string) => ({
 
 export const uiContainer = () => ({
   display: 'flex',
-  height: '70px',
-  fontSize: "2rem",
-  width: { lg: '70%', md: '.7', sm: '60%', xs: '60%' },
+  // flexWrap: { lg: "80%", md: "no-wrap", sm: "wrap", xs: "wrap" },
+  height: { lg: 70, md: 70, sm: 80, xs: 100 },
+  fontSize: '2rem',
+  width: { lg: '70%', md: '70%', sm: '60%', xs: '40%' },
   border: '4px solid black'
 });
 
 export const searchBox = () => ({
     fontFamily: "Silkscreen",
     fontSize: '1.5rem',
-    width: '100%'
+    width: '100%',
+  
 });
 
 export const btnStyle = () => ({
@@ -62,9 +64,11 @@ export const btnStyle = () => ({
   color: 'black',
   fontSize: '1.5rem',
   width: '50%',
+ 
   backgroundColor: '#39b549',
   border: '1px solid black',
-  lineHeight: '1.2ch'
+  lineHeight: '1.2ch',
+  cursor: "pointer"
 });
 
 export const labels = () => ({

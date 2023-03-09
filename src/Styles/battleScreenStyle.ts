@@ -50,7 +50,7 @@ export const getHPContainerStyle = (mewState: MewState) => ({
 export const getHPBarStyle = () => ({
   display: 'flex',
   justifyContent: 'flex-end',
-  width: '400px',
+  width: { lg: 400, md: 300, sm: 250, xs: 250 },
   height: '10px',
   border: '1px solid black'
 });
