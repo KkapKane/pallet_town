@@ -15,7 +15,7 @@ export default function Pixel({content} : Props) {
         }
     }, [content])
     return (
-        <div style={{height: 100, width: 100, border: "1px solid black", backgroundColor: select == true ? "black" : "white", zIndex: 99}}>
+        <div style={{ height: 100, width: 100, border: "1px solid black", backgroundColor: select == true ? "black" : "white", zIndex: 99}}>
             YO
         </div>
     )

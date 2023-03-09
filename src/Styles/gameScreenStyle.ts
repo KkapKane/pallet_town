@@ -8,6 +8,7 @@ type OakType = {
 export const getMainScreenStyle = (displayState: string, oakPos: OakType) => ({
   display: displayState == 'Home' || displayState == 'Battle' || displayState == 'PokeDex' ? 'none' : 'flex',
   flexDirection: 'column',
+  
   position: 'absolute',
   top: '0%',
   left: oakPos.oak1,
