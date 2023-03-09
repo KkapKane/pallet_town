@@ -5,50 +5,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { increment, setSpecificIndex, switchMode } from '../../redux/slices/dialogSlice';
 import { useGetPokemonByNameQuery } from '../../redux/pokemonService';
 import { RootState } from '../../redux/store';
-import cry from "../../assets/sounds/SFX_CRY_0A.wav"
-import victorySound from "../../assets/sounds/SFX_LEVEL_UP.wav"
-import pokeballSound from "../../assets/sounds/SFX_BALL_POOF.wav"
-import dmgSound from "../../assets/sounds/SFX_MUTED_SNARE_3.wav"
+import cry from '../../assets/sounds/SFX_CRY_0A.wav';
+import victorySound from '../../assets/sounds/SFX_LEVEL_UP.wav';
+import pokeballSound from '../../assets/sounds/SFX_BALL_POOF.wav';
+import dmgSound from '../../assets/sounds/SFX_MUTED_SNARE_3.wav';
 import Dialog from '../gameMechanics/Dialog';
-import professorOak from '../../assets/professorOak.png';
+import professorOak from '../../assets/images/professorOak.png';
 import { getBattleContainerStyle, getOakStyle, getMewStyle, getPlayerPokemonStyle, getHPContainerStyle, getHPBarStyle, getHPFillStyle } from '../../Styles/battleScreenStyle';
 import { switchDisplay } from '../../redux/slices/displaySlice';
 
-
 export default function BattleScreen() {
-const dispatch = useDispatch();
-const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery('mew', {});
-const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
-const { index: dialogIndex, mode: dialogMode } = useSelector((state: RootState) => state.dialog);
+  const dispatch = useDispatch();
+  const { data } = useGetPokemonByNameQuery('mew', {});
+  const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
+  const { index: dialogIndex } = useSelector((state: RootState) => state.dialog);
 
-const [takenDmg, setTakenDmg] = useState(false);
-const [mewState, setMewState] = useState({ HP: 100, takenDmg: false, show: false });
+  const [takenDmg, setTakenDmg] = useState(false);
+  const [mewState, setMewState] = useState({ HP: 100, takenDmg: false, show: false });
 
-const [oakPos, setOakPos] = useState({
-leftPos: '-10%',
-oakOpacity: '100%',
-hide: false
-});
+  const [oakPos, setOakPos] = useState({
+    leftPos: '-10%',
+    oakOpacity: '100%',
+    hide: false
+  });
 
-const [playerPokemonStyle, setPlayerPokemonStyle] = useState({ opacity: '0%' });
+  const [playerPokemonStyle, setPlayerPokemonStyle] = useState({ opacity: '0%' });
 
-useEffect(() => {
-dispatch(switchMode('battle'));
+  useEffect(() => {
+    dispatch(switchMode('battle'));
 
-setTimeout(() => {
-setOakPos({ ...oakPos, leftPos: '80%' });
-}, 1000);
-}, []);
+    setTimeout(() => {
+      //upon intial load set professor oak to slide towards middle
+      setOakPos({ ...oakPos, leftPos: '80%' });
+    }, 1000);
+  }, []);
 
-const playSound = (src: string) => {
-  let sound = new Audio(src);
-  sound.volume = 0.25;
-  sound.play();
-};
-const pauseSound = (src: string) => {
-  let sound = new Audio(src);
-  sound.pause();
-}
+  const playSound = (src: string) => {
+    let sound = new Audio(src);
+    sound.volume = 0.25;
+    sound.play();
+  };
 
   useEffect(() => {
     switch (dialogIndex) {
@@ -86,7 +82,7 @@ const pauseSound = (src: string) => {
   function handlePokemonThrowOut() {
     // Player throws out their Pokémon and set its opacity to 100%
     setTimeout(() => {
-      playSound(pokeballSound)
+      playSound(pokeballSound);
       setPlayerPokemonStyle({ ...playerPokemonStyle, opacity: '100%' });
       dispatch(increment());
     }, 1600);
@@ -96,7 +92,7 @@ const pauseSound = (src: string) => {
     // Player chooses a move to attack with
     let i = 0; // keep track of how many times the enemy blinks after getting attacked
     let mainTimeout = setTimeout(() => {
-      playSound(dmgSound)
+      playSound(dmgSound);
       let mainInterval = setInterval(() => {
         setTakenDmg(true);
         setMewState({ ...mewState, takenDmg: true });
@@ -119,7 +115,7 @@ const pauseSound = (src: string) => {
 
   function handleHpDecrement() {
     // Enemy takes damage and HP decrements slowly
-    playSound(cry)
+    playSound(cry);
     let j = 100;
     let subtractHP = setInterval(() => {
       if (j == 0) {
@@ -137,18 +133,16 @@ const pauseSound = (src: string) => {
   function handleBattleEnd() {
     // Hide Mew
     setMewState({ ...mewState, show: false });
-    
-    playSound(victorySound)
-    setTimeout(() =>{
-      dispatch(switchDisplay("Game"))
-      dispatch(switchMode("intro"))
-      dispatch(setSpecificIndex(9))
-    }, 5000)
-    
-  }
-  
 
-  
+    playSound(victorySound);
+    // battle is over transition to the next stage w=
+    setTimeout(() => {
+      dispatch(switchDisplay('Game'));
+      dispatch(switchMode('intro'));
+      dispatch(setSpecificIndex(9));
+    }, 5000);
+  }
+
   const styles = {
     battleContainer: getBattleContainerStyle(),
     oak: getOakStyle(oakPos),

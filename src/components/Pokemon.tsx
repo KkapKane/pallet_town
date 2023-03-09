@@ -2,14 +2,14 @@ import { useGetPokemonByNameQuery } from '../redux/pokemonService';
 import { setStarterPokemon } from '../redux/slices/playerSlice';
 import type { RootState } from '../redux/store';
 import { Box, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 export const Pokemon = ({ name }: { name: string }) => {
   const { data, error, isLoading, isFetching } = useGetPokemonByNameQuery(name, {});
 
   const dispatch = useDispatch();
-  const dialogIndex= useSelector((state: RootState) => state.dialog.index);
+  const dialogIndex = useSelector((state: RootState) => state.dialog.index);
   const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
   const [isSelected, setIsSelected] = useState<string | undefined | null>(null);
 
@@ -19,14 +19,11 @@ export const Pokemon = ({ name }: { name: string }) => {
     setIsSelected(name);
   };
 
-  useEffect(() => {
-    console.log(starterPokemonState);
-  }, [starterPokemonState]);
-
   const styles = {
     pokemonContainer: {
       display: 'flex',
-      backgroundColor: isSelected === starterPokemonState?.name ? 'red' : 'white'
+      //when a player clicks on a pokemon to select it, set a border around it to indicate it's selected
+      border: isSelected === starterPokemonState?.name ? '3px solid green' : '1px solid white'
     },
     pokemonImage: {
       height: { lg: '200px', md: '200px', sm: '200px', xs: '150px' }

@@ -1,33 +1,25 @@
 import { Box, TextField, Typography, Button } from '@mui/material';
 
-import pokemonLogo from '../../assets/pokemonlogo.png';
-import background from '../../assets/background.jpg';
+import pokemonLogo from '../../assets/images/pokemonlogo.png';
+import background from '../../assets/images/background.jpg';
 import { useState } from 'react';
-import { useDispatch,  } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { switchDisplay } from '../../redux/slices/displaySlice';
 import { setPlayerName } from '../../redux/slices/playerSlice';
 
-
 export default function HomeScreen() {
+  const [opacity, setOpacity] = useState(1);
+  const [name, setName] = useState('');
 
-  const [opacity, setOpacity] = useState(1)
-  const [name, setName] = useState("")
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const transition = () => {
-    
-    
-    setOpacity(0)
-    dispatch(switchDisplay("Game"))
-    dispatch(setPlayerName(name))
-    
+    // if player doesn't enter name/ return
+    if (name == '') return;
+    //else set the screen to slowly fade out nad switch the display to the game
+    setOpacity(0);
+    dispatch(switchDisplay('Game'));
+    dispatch(setPlayerName(name));
   };
-
-
-
-
-
-
 
   const Styles = {
     mainScreenStyle: {
@@ -40,7 +32,7 @@ export default function HomeScreen() {
       backgroundPosition: 'center',
       height: '100vh',
       width: '100vw',
-    
+
       transition: ' 2000ms',
       zIndex: 99,
       opacity: opacity
@@ -60,8 +52,6 @@ export default function HomeScreen() {
     }
   };
 
- 
-
   return (
     <Box sx={Styles.mainScreenStyle}>
       <Box sx={Styles.gameContainerStyle}>
@@ -75,10 +65,10 @@ export default function HomeScreen() {
             '& .MuiInputLabel-root': { color: 'white' },
             border: '1px solid white',
             borderRadius: 1,
-            width: "30%",
+            width: '30%'
           }}
           label="Name"
-          inputProps={{ maxLength: 22, disableunderline:"true" , style: { color: 'white'} }}
+          inputProps={{ maxLength: 22, disableunderline: 'true', style: { color: 'white' } }}
           onChange={(e) => setName(e.target.value)}></TextField>
         <Button onClick={transition} variant="outlined" sx={{ backgroundColor: 'rgba(0,0,0,0.2)', color: 'white', width: '20%', fontSize: '1.3rem' }} size="large">
           Start

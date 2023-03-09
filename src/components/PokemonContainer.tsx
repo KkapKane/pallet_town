@@ -1,21 +1,23 @@
-import { getPokemonContainerStyle } from "../Styles/gameScreenStyle";
+import { getPokemonContainerStyle } from '../Styles/gameScreenStyle';
 import { Box } from '@mui/material';
 import { Pokemon } from './Pokemon';
 
 import { HiOutlineArrowRight } from 'react-icons/hi';
 interface Props {
-dialogIndex: number,
-
+  dialogIndex: number;
 }
 
 const styles = {
-    pokemonContainer: getPokemonContainerStyle()
-}
+  pokemonContainer: getPokemonContainerStyle()
+};
 
-export default function PokemonContainer ({dialogIndex} : Props) {
-const starterPokemon = ['charmander', 'squirtle', 'bulbasaur'];
-const evolutionExample = ['charmander', 'charmeleon', 'charizard'];
+export default function PokemonContainer({ dialogIndex }: Props) {
+  const starterPokemon = ['charmander', 'squirtle', 'bulbasaur'];
+  const evolutionExample = ['charmander', 'charmeleon', 'charizard'];
 
+  // if the dialog index is 2 or 5 that means it should show the starter pokemon list
+  // index 2 is when it shows examples of pokemon and their types
+  // index 5 is when it prompts user to pick their starter pokemon
   if (dialogIndex === 2 || dialogIndex === 5) {
     return (
       <Box sx={styles.pokemonContainer}>
@@ -24,13 +26,14 @@ const evolutionExample = ['charmander', 'charmeleon', 'charizard'];
         })}
       </Box>
     );
+    // index 3 is when it shows example of pokemon evolutions so it should map through the evolution array
   } else if (dialogIndex === 3) {
     return (
       <Box sx={styles.pokemonContainer}>
         {evolutionExample.map((pokemon, index) => {
           return (
             <>
-            {/* if it's the pokemon on the very right of the screen don't put arrow next to it */}
+              {/* if it's the pokemon on the very right of the screen don't put arrow next to it */}
               {index === evolutionExample.length - 1 ? (
                 <Pokemon name={pokemon} />
               ) : (
@@ -47,4 +50,4 @@ const evolutionExample = ['charmander', 'charmeleon', 'charizard'];
   } else {
     return null;
   }
-};
+}

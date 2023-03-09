@@ -1,4 +1,4 @@
-import type { OakPosState, MewState, PlayerPokemonStyleState } from "../types";
+import type { OakPosState, MewState, PlayerPokemonStyleState } from '../types';
 
 export const getBattleContainerStyle = () => ({
   display: 'flex',
@@ -8,7 +8,8 @@ export const getBattleContainerStyle = () => ({
   justifyContent: 'center',
   alignItems: 'center',
   height: '100vh',
-  width: '100vw'
+  width: '100vw',
+  overflow: 'hidden'
 });
 
 export const getOakStyle = (oakPos: OakPosState) => ({
@@ -17,7 +18,8 @@ export const getOakStyle = (oakPos: OakPosState) => ({
   top: '0%',
   opacity: oakPos.oakOpacity,
   left: oakPos.leftPos,
-  transition: '3000ms'
+  transition: '3000ms',
+  scale: { lg: 1, md: 1, sm: 0.6, xs: 0.6 }
 });
 
 export const getMewStyle = (mewState: MewState) => ({

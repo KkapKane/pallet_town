@@ -1,14 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-
 export interface DialogState {
   mode: string;
   index: number;
 }
 
 const initialState: DialogState = {
-  mode: "intro",
-  index: 11
+  mode: 'intro',
+  index: 0
 };
 
 export const dialogSlice = createSlice({
@@ -25,16 +24,15 @@ export const dialogSlice = createSlice({
     decrement: (state) => {
       state.index -= 1;
     },
-    reset: (state) =>{
+    reset: (state) => {
       state.index = 0;
     },
     setSpecificIndex: (state, action) => {
-      state.index = action.payload
+      state.index = action.payload;
     },
     switchMode: (state, action) => {
-      state.mode = action.payload
+      state.mode = action.payload;
     }
-    
   }
 });
 

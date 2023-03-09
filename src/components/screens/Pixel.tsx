@@ -5,12 +5,12 @@ interface Props {
 
 export default function Pixel({content} : Props) {
     const [select, setSelect] = useState(false)
-
+    // if the boxArray element is == black/ make it's background color to black
     useEffect(() =>{
-        if(content == "yea"){
+        if(content == "black"){
             setSelect(true)
         }
-        else if (content == "yo") {
+        else if (content == "white") {
             setSelect(false)
         }
     }, [content])

@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
@@ -7,7 +6,7 @@ import { store } from './redux/store';
 import { ToastContainer } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
-import './index.css';
+
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -26,13 +25,11 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <ToastContainer position="bottom-left" />
-        <App />
-      </ThemeProvider>
-    </Provider>
-
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <ToastContainer position="bottom-left" />
+      <App />
+    </ThemeProvider>
+  </Provider>
 );
