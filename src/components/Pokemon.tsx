@@ -28,7 +28,7 @@ export const Pokemon = ({ name }: { name: string }) => {
       border: isSelected === starterPokemonState?.name ? '3px solid green' : '1px solid white'
     },
     pokemonImage: {
-      height: { lg: '200px', md: '200px', sm: '200px', xs: '150px' }
+      height: { lg: '200px', md: '200px', sm: '200px', xs: '140px' }
     },
     pokemonLabel: {
       fontSize: { lg: '40px', md: '35px', sm: '30px', xs: '12px' }

@@ -22,7 +22,7 @@ export default function Pixel({content} : Props) {
         else if (content == "white") {
             setSelect(false)
         }
-        console.log(pixelWidth)
+    
       
     }, [content])
     return (

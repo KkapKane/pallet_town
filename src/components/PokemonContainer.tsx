@@ -32,7 +32,7 @@ export default function PokemonContainer({ dialogIndex }: Props) {
       <Box sx={styles.pokemonContainer}>
         {evolutionExample.map((pokemon, index) => {
           return (
-            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: { lg: '80%', md: '70%', sm: '100%', xs: '100%' } }}>
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: { lg: '80%', md: '70%', sm: '100%', xs: '30%' } }}>
               {/* if it's the pokemon on the very right of the screen don't put arrow next to it */}
               {index === evolutionExample.length - 1 ? (
                 <Pokemon name={pokemon} key={index + pokemon + index} />

@@ -4,7 +4,7 @@ export const mainPokeDexScreen = () => ({
   alignItems: 'center',
   flexDirection: 'column',
   height: '100%',
-  
+  overflow: "hidden"
 });
 
 export const pokeDexContainer = () => ({
