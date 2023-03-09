@@ -11,7 +11,7 @@ import flying from '../../assets/backgroundTypes/flying.jpg';
 import ice from '../../assets/backgroundTypes/ice.png';
 import poison from '../../assets/backgroundTypes/poison.jpg';
 import pyschic from '../../assets/backgroundTypes/psychic.png';
-import { pokeDexContainer, pokemonGif, screen, mainPokeDexScreen, uiContainer, searchBox, btnStyle } from '../../Styles/pokeDexStyle';
+import { pokeDexContainer, pokemonGif, screen, mainPokeDexScreen, uiContainer, searchBox, btnStyle, labels } from '../../Styles/pokeDexStyle';
 
 interface IPokemonData {
   name: string;
@@ -123,7 +123,8 @@ export default function PokeDexScreen() {
     pokemonGif: pokemonGif(),
     uiContainer: uiContainer(),
     searchBox: searchBox(),
-    btnStyle: btnStyle()
+    btnStyle: btnStyle(),
+    labels: labels()
   };
 
   return (
@@ -134,10 +135,10 @@ export default function PokeDexScreen() {
           <Box sx={style.screen}>
             <Box component="img" src={gif} sx={style.pokemonGif} />
             <div style={{ backgroundColor: 'rgba(0,0,0,.5)', width: '100%', textAlign: 'center', fontFamily: 'Silkscreen' }}>
-              <Typography>{pokeData?.name.toUpperCase()}</Typography>
-              <Typography>{pokeData?.types[0].type.name.toUpperCase()} TYPE</Typography>
-              <Typography>HEIGHT: {pokeData?.height} ft</Typography>
-              <Typography>WEIGHT: {pokeData?.weight} lbs</Typography>
+              <Typography sx={style.labels}>{pokeData?.name.toUpperCase()}</Typography>
+              <Typography sx={style.labels}>{pokeData?.types[0].type.name.toUpperCase()} TYPE</Typography>
+              <Typography sx={style.labels}>HEIGHT: {pokeData?.height} ft</Typography>
+              <Typography sx={style.labels}>WEIGHT: {pokeData?.weight} lbs</Typography>
             </div>
           </Box>
         ) : null}

@@ -45,19 +45,29 @@ export const screen = (currentBG: string) => ({
 
 export const uiContainer = () => ({
   display: 'flex',
-  height: '60px',
+  height: '70px',
   fontSize: "2rem",
   width: { lg: '70%', md: '.7', sm: '60%', xs: '60%' },
-  border: '1px solid black'
+  border: '4px solid black'
 });
 
 export const searchBox = () => ({
-  fontSize: '2rem',
-  width: '100%'
+    fontFamily: "Silkscreen",
+    fontSize: '1.5rem',
+    width: '100%'
 });
 
 export const btnStyle = () => ({
-  fontSize: '1.1rem',
-  width: '100%',
-  scale: 1
+  fontFamily: 'Silkscreen',
+  color: 'black',
+  fontSize: '1.5rem',
+  width: '50%',
+  backgroundColor: '#39b549',
+  border: '1px solid black',
+  lineHeight: '1.2ch'
+});
+
+export const labels = () => ({
+  fontFamily: 'Silkscreen',
+  fontSize: "1.2rem",
 });

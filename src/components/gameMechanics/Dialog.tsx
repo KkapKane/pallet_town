@@ -30,7 +30,7 @@ export default function Dialog() {
   const gameDialog = [
     `Well, hello there, young trainer ${playerState}! It's a pleasure to meet you. I am Professor Oak, but most folks just call me "Professor". Are you prepared to dive into the captivating world of Pokémon?`,
     `Excellent! I shall act as your guide and teach you all about these remarkable creatures. We will explore every facet of the Pokémon universe, from their unique affinities to their evolutionary stages.`,
-    `Let me share with you a little secret about the Pokémons you will capture on your journey. Each Pokémon will have an affinity, such as fire, water, grass, and more! It's essential to choose wisely when selecting your first Pokémon.`,
+    `Let me share with you a little secret about the Pokémon you will capture on your journey. Each Pokémon will have an affinity, such as fire, water, grass, and more! It's essential to choose wisely when selecting your first Pokémon.`,
     `As your Pokémon gain more battle experience, they have the potential to evolve into different stages of development, unlocking even greater powers and abilities.`,
     `Are you prepared to become a true Pokémon Master, ${playerState}? As you know, selecting your first starter Pokémon is critical to your success. Are you ready to choose your very first companion? The adventure is just getting started!`,
     `Take your time and choose carefully, as the Pokémon you pick will be your loyal companion on this exciting journey!`,
@@ -77,7 +77,7 @@ export default function Dialog() {
   useEffect(() => {
     // disable the back button if you are in a battle or if you just got out of the battle. Also if it's the first dialog index.
     if (displayState == 'Battle' || (displayState == 'Game' && dialogIndex == 9) || dialogIndex === 0) {
-      console.log(dialogIndex);
+     
       setDisableBackBtn(true);
     } else {
       setDisableBackBtn(false);

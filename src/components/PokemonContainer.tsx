@@ -21,8 +21,8 @@ export default function PokemonContainer({ dialogIndex }: Props) {
   if (dialogIndex === 2 || dialogIndex === 5) {
     return (
       <Box sx={styles.pokemonContainer}>
-        {starterPokemon.map((pokemon) => {
-          return <Pokemon name={pokemon} />;
+        {starterPokemon.map((pokemon, index) => {
+          return <Pokemon name={pokemon} key={index + pokemon} />;
         })}
       </Box>
     );
@@ -32,17 +32,17 @@ export default function PokemonContainer({ dialogIndex }: Props) {
       <Box sx={styles.pokemonContainer}>
         {evolutionExample.map((pokemon, index) => {
           return (
-            <>
+            <Box key={index} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', width: { lg: '80%', md: '70%', sm: '100%', xs: '100%' } }}>
               {/* if it's the pokemon on the very right of the screen don't put arrow next to it */}
               {index === evolutionExample.length - 1 ? (
-                <Pokemon name={pokemon} />
+                <Pokemon name={pokemon} key={index + pokemon + index} />
               ) : (
                 <>
                   {' '}
-                  <Pokemon name={pokemon} /> <HiOutlineArrowRight />{' '}
+                  <Pokemon name={pokemon} key={index * 12} /> <HiOutlineArrowRight />{' '}
                 </>
               )}
-            </>
+            </Box>
           );
         })}
       </Box>
