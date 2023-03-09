@@ -8,7 +8,7 @@ export interface DialogState {
 
 const initialState: DialogState = {
   mode: "intro",
-  index: 4
+  index: 11
 };
 
 export const dialogSlice = createSlice({
@@ -28,6 +28,9 @@ export const dialogSlice = createSlice({
     reset: (state) =>{
       state.index = 0;
     },
+    setSpecificIndex: (state, action) => {
+      state.index = action.payload
+    },
     switchMode: (state, action) => {
       state.mode = action.payload
     }
@@ -36,6 +39,6 @@ export const dialogSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, switchMode, reset } = dialogSlice.actions;
+export const { increment, decrement, switchMode, reset, setSpecificIndex } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

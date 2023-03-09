@@ -1,18 +1,18 @@
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import type { RootState } from '../../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import professorOak from '../../assets/professorOak.png';
 import oak2 from '../../assets/oak2.png';
 import { useEffect, useState } from 'react';
 import Dialog from '../gameMechanics/Dialog';
-import battleSong from '../../assets/Battle.mp3'
-import { getMainScreenStyle, getOak1Style, getOak2Style, getGridLayoutStyle, getPokemonContainerStyle } from '../../Styles/gameScreenStyle';
 
+import { getMainScreenStyle, getOak1Style, getOak2Style, getGridLayoutStyle, getPokemonContainerStyle, getPokeDexStyle, getArrowStyle, getClickMeStyle } from '../../Styles/gameScreenStyle';
+import pokeDex from "../../assets/pokeDex.png"
 import Pixel from './Pixel';
 import PokemonContainer from '../PokemonContainer';
 import { switchDisplay } from '../../redux/slices/displaySlice';
 import { switchMode } from '../../redux/slices/dialogSlice';
-
+import arrow from "../../assets/Arrow.png"
 
 
 type OakPos = {
@@ -30,6 +30,7 @@ export default function GameScreen() {
   
   const [testState, setTestState] = useState<string[]>([]);
   const [oakPos, setOakPos] = useState<OakPos>({ oak1: '-100%', oak2: '-100%' });
+  const [pokeDexState, setPokeDexState] = useState({show: false})
 
   useEffect(() => {
     if (displayState === 'Game') {
@@ -41,11 +42,11 @@ export default function GameScreen() {
     }
   }, [displayState]);
 
-  const playSound = (src: string) => {
-    let sound = new Audio(src);
-    sound.volume = 0.25;
-    sound.play();
-  };
+const transitionToPokeDexScreen = () =>{
+  dispatch(switchDisplay("PokeDex"))
+}
+
+ 
 
   useEffect(() => {
     if(dialogMode == "intro"){
@@ -62,7 +63,7 @@ export default function GameScreen() {
         setOakPos((prev) => ({ ...prev, oak2: '0%' }));
         break;
       case 8:
-        playSound(battleSong)
+        
         let i = 0;
         let blackscreen = setInterval(() => {
           if (i === 200) {
@@ -87,8 +88,20 @@ export default function GameScreen() {
           i++;
         }, 15);
         return () => clearInterval(blackscreen);
-      default:
-        break;
+        case 9:
+        setOakPos((prev) => ({ ...prev, oak2: '40%' }));  
+        break
+        case 11: 
+        setOakPos((prev) => ({ ...prev, oak2: '0%' }));
+        setPokeDexState({...pokeDexState, show: true})
+        break
+        
+
+      
+
+       
+       
+        
     }
   }
   }, [dialogIndex]);
@@ -101,6 +114,9 @@ const styles = {
   oak2: getOak2Style(dialogIndex, oakPos),
   pokemonContainer: getPokemonContainerStyle(),
   gridLayout: getGridLayoutStyle(),
+  pokeDexStyle: getPokeDexStyle(pokeDexState),
+  arrowStyle: getArrowStyle(dialogIndex),
+  clickMeStyle: getClickMeStyle(dialogIndex),
 };
 
 return (
@@ -114,6 +130,9 @@ return (
     
     <Box component="img" src={professorOak} sx={styles.oak1} />
     <Box component="img" src={oak2} sx={styles.oak2} />
+    <Box component="img" src={pokeDex} sx={styles.pokeDexStyle} onClick={() => transitionToPokeDexScreen()} />
+    <Box component="img" src={arrow}   sx={styles.arrowStyle} />
+    <Typography sx={styles.clickMeStyle}>Click Me</Typography>
     <Dialog />
     
   </Box>

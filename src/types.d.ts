@@ -11,6 +11,11 @@ export type OakPosState = {
   hide: boolean;
 };
 
-type PlayerPokemonStyleState = {
+export type PlayerPokemonStyleState = {
   opacity: string;
+};
+
+export type pokeDexState = {
+  show: boolean;
+ 
 };

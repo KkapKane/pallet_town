@@ -2,13 +2,17 @@ import { Box, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { increment, switchMode } from '../../redux/slices/dialogSlice';
+import { increment, setSpecificIndex, switchMode } from '../../redux/slices/dialogSlice';
 import { useGetPokemonByNameQuery } from '../../redux/pokemonService';
 import { RootState } from '../../redux/store';
-
+import cry from "../../assets/sounds/SFX_CRY_0A.wav"
+import victorySound from "../../assets/sounds/SFX_LEVEL_UP.wav"
+import pokeballSound from "../../assets/sounds/SFX_BALL_POOF.wav"
+import dmgSound from "../../assets/sounds/SFX_MUTED_SNARE_3.wav"
 import Dialog from '../gameMechanics/Dialog';
 import professorOak from '../../assets/professorOak.png';
 import { getBattleContainerStyle, getOakStyle, getMewStyle, getPlayerPokemonStyle, getHPContainerStyle, getHPBarStyle, getHPFillStyle } from '../../Styles/battleScreenStyle';
+import { switchDisplay } from '../../redux/slices/displaySlice';
 
 
 export default function BattleScreen() {
@@ -30,12 +34,21 @@ const [playerPokemonStyle, setPlayerPokemonStyle] = useState({ opacity: '0%' });
 
 useEffect(() => {
 dispatch(switchMode('battle'));
+
 setTimeout(() => {
 setOakPos({ ...oakPos, leftPos: '80%' });
 }, 1000);
 }, []);
 
-
+const playSound = (src: string) => {
+  let sound = new Audio(src);
+  sound.volume = 0.25;
+  sound.play();
+};
+const pauseSound = (src: string) => {
+  let sound = new Audio(src);
+  sound.pause();
+}
 
   useEffect(() => {
     switch (dialogIndex) {
@@ -73,6 +86,7 @@ setOakPos({ ...oakPos, leftPos: '80%' });
   function handlePokemonThrowOut() {
     // Player throws out their Pokémon and set its opacity to 100%
     setTimeout(() => {
+      playSound(pokeballSound)
       setPlayerPokemonStyle({ ...playerPokemonStyle, opacity: '100%' });
       dispatch(increment());
     }, 1600);
@@ -82,6 +96,7 @@ setOakPos({ ...oakPos, leftPos: '80%' });
     // Player chooses a move to attack with
     let i = 0; // keep track of how many times the enemy blinks after getting attacked
     let mainTimeout = setTimeout(() => {
+      playSound(dmgSound)
       let mainInterval = setInterval(() => {
         setTakenDmg(true);
         setMewState({ ...mewState, takenDmg: true });
@@ -104,6 +119,7 @@ setOakPos({ ...oakPos, leftPos: '80%' });
 
   function handleHpDecrement() {
     // Enemy takes damage and HP decrements slowly
+    playSound(cry)
     let j = 100;
     let subtractHP = setInterval(() => {
       if (j == 0) {
@@ -121,6 +137,14 @@ setOakPos({ ...oakPos, leftPos: '80%' });
   function handleBattleEnd() {
     // Hide Mew
     setMewState({ ...mewState, show: false });
+    
+    playSound(victorySound)
+    setTimeout(() =>{
+      dispatch(switchDisplay("Game"))
+      dispatch(switchMode("intro"))
+      dispatch(setSpecificIndex(9))
+    }, 5000)
+    
   }
   
 

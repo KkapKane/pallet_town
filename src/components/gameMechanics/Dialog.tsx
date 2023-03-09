@@ -2,10 +2,12 @@ import type { RootState } from '../../redux/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography, Button } from '@mui/material';
 import dialogBox from '../../assets/dialogBox.png';
-import { useState, useEffect } from 'react';
+import { useState, useEffect , useRef } from 'react';
 import { increment, decrement, reset } from '../../redux/slices/dialogSlice';
 import { useGetPokemonByNameQuery } from '../../redux/pokemonService';
 import AttackOptions from './AttackOptions';
+import dialogSound from "../../assets/sounds/SFX_PRESS_AB.wav"
+
 
 export default function Dialog() {
   interface DialogState {
@@ -20,6 +22,7 @@ export default function Dialog() {
   const starterPokemonState = useSelector((state: RootState) => state.player.starterPokemon);
   const displayState = useSelector((state: RootState) => state.display.value);
   const {index: dialogIndex, mode: dialogMode}: DialogState = useSelector((state: RootState) => state.dialog);
+ 
   const dispatch = useDispatch();
   const gameDialog = [
     `Well, hello there, young trainer ${playerState}! It's a pleasure to meet you. I am Professor Oak, but most folks just call me "Professor". Are you prepared to dive into the captivating world of Pokémon?`,
@@ -30,7 +33,13 @@ export default function Dialog() {
     `Take your time and choose carefully, as the Pokémon you pick will be your loyal companion on this exciting journey!`,
     `Great choice! ${starterPokemonState?.name} is a ${starterPokemonState?.types[0]?.type.name} type which I think suits you quite well If I say so myself! `,
     `Now that you have chosen your first Pokémon, lets see what ${starterPokemonState?.name} can do. Are you ready?`,
-    `good luck....`
+    `good luck....`,
+    `...Are you sure you haven't done this before?`,
+    `Well anyways, I think you are ready to go out on your own`,
+    `But before you go I need to tell you about the pokedex`,
+    `The pokedex holds information about all the pokemons we've discovered so far`,
+    'use it to search a pokemon you wish to know more about',
+    `go on ${playerState}, give it a try!`
   ];
   
   const battleDialog = ['Professor Oak wants a battle!',
@@ -43,6 +52,19 @@ export default function Dialog() {
 ];
 
 
+
+const playSound = (src: string) => {
+  let sound = new Audio(src);
+  sound.volume = 0.25;
+  sound.play();
+};
+
+// let littleRoot = document.getElementById('little-root') as HTMLAudioElement;
+
+// if(littleRoot){
+//   littleRoot.volume = .25;
+// }
+
   useEffect(() => {
     if(dialogMode == "battle"){
       dispatch(reset())
@@ -52,7 +74,11 @@ export default function Dialog() {
 
   useEffect(() => {
     if (displayState == 'Game') {
-      dispatch(increment());
+      // littleRoot.play()
+      if(dialogIndex == -1){
+
+        dispatch(increment());
+      }
       const delayedDialog = setTimeout(() => {
         setDialogPos('-35%');
       }, 1500);
@@ -73,14 +99,28 @@ export default function Dialog() {
     let split = dialogMode == 'intro' ? gameDialog[dialogIndex].split('') : battleDialog[dialogIndex].split(''); 
     for (var i = 0; i < split.length; i++) {
       setVisibleDialog((oldArray: string[]) => [...oldArray, split[i]]);
-      await timer(30); // ideal speed is 30
+      await timer(20); // ideal speed is 30
     }
   }
 
   let popupSpeed = 2500;
 
+  let audio =  document.getElementById('battle-song') as HTMLAudioElement
+  if(audio){
+
+    audio.volume = .25;
+  }
   useEffect(() => {
-    console.log(dialogIndex)
+    if(dialogIndex == 8 && dialogMode == "intro"){
+      // littleRoot.pause()
+      audio.play()
+    }
+    if(dialogIndex == 6 && dialogMode == "battle"){
+      
+      audio.pause()
+       
+      
+    }
     if (dialogIndex > 0) {
       popupSpeed = 1000;
     }
@@ -90,7 +130,9 @@ export default function Dialog() {
       grabText();
     }, popupSpeed);
     return () => clearInterval(delayedSpeech);
-  }, [dialogIndex]);
+  }, [dialogIndex, dialogMode]);
+
+
 
   const traverseDialog = (direction: string) => {
     
@@ -98,9 +140,11 @@ export default function Dialog() {
 
       if (direction == 'forward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
         if (dialogIndex == gameDialog.length - 1) return;
+        playSound(dialogSound)
         dispatch(increment());
       } else if (direction == 'backward' && gameDialog[dialogIndex].split('').length == visibleDialog.length) {
         if (dialogIndex == 0) return;
+        playSound(dialogSound)
         dispatch(decrement());
       }
     }
@@ -108,9 +152,11 @@ export default function Dialog() {
       
       if (direction == 'forward' && battleDialog[dialogIndex].split('').length == visibleDialog.length) {
         if (dialogIndex == battleDialog.length - 1) return;
+        playSound(dialogSound)
         dispatch(increment());
       } else if (direction == 'backward' && battleDialog[dialogIndex].split('').length == visibleDialog.length) {
         if (dialogIndex == 0) return;
+        playSound(dialogSound)
         dispatch(decrement());
       }
     }
@@ -169,6 +215,7 @@ export default function Dialog() {
   };
   return (
     <Box sx={styles.dialogContainer}>
+
       <Typography align="left" fontSize={{ lg: 30, md: 20, sm: 30, xs: 14 }} sx={styles.dialogText}>
         {visibleDialog}
       </Typography>
@@ -177,6 +224,7 @@ export default function Dialog() {
       <Button sx={styles.nextButton} onClick={() => traverseDialog('forward')}>
         {dialogIndex == 7 ? 'ready' : 'next'}
       </Button>
+      
       <Button sx={styles.backButton} onClick={() => traverseDialog('backward')}>
         Prev
       </Button>
