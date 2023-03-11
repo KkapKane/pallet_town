@@ -14,7 +14,7 @@ export default function Pixel({content} : Props) {
     let pixelWidth = window.innerWidth / HOW_MANY_BOXES_PER_ROW;
     const [select, setSelect] = useState(false)
  
-    // if the boxArray element is == black/ make it's background color to black
+    // if the boxArray element is == black / set it's background color to black
     useEffect(() =>{
         if(content == "black"){
             setSelect(true)

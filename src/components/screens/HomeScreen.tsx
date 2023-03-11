@@ -15,7 +15,7 @@ export default function HomeScreen() {
   const transition = () => {
     // if player doesn't enter name/ return
     if (name == '') return;
-    //else set the screen to slowly fade out nad switch the display to the game
+    //else set the screen to slowly fade out and switch the display to the game
     setOpacity(0);
     dispatch(switchDisplay('Game'));
     dispatch(setPlayerName(name));
