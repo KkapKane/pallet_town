@@ -1,7 +1,6 @@
 <h1 align="center"> Multi-step Pokemon Game  </h1>  
 
 
-
 <h2> <h2>
 
 Click [here](https://kkapkane.github.io/Pokemon_Project/) for live preview.
@@ -13,13 +12,15 @@ Click [here](https://kkapkane.github.io/Pokemon_Project/) for live preview.
 ![MaterialUI](https://img.shields.io/badge/Material--UI-%230081CB.svg?style=for-the-badge&logo=material-ui&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 <br>
+Made with the help of the Pokemon API which can be found [here](https://pokeapi.co/)
 <br>
 
 
 
 # Description
 
-<h4> A Pokemon multi-step wizard app that guides user through the early stages of a pokemon game and informs them about the world of Pokemon! Pokdex is also included at the end of the "game" </h4>
+
+<h4> A Pokemon multi-step wizard app that guides user through the early stages of a pokemon game and informs them about the world of Pokemon! Pokdex is also included at the end of the game. </h4>
 
 <h2> </h2>
 
