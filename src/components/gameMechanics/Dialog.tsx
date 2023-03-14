@@ -223,7 +223,7 @@ export default function Dialog() {
   };
   return (
     <Box sx={styles.dialogContainer}>
-      <Typography align="left" fontSize={{ lg: 30, md: 20, sm: 18, xs: 12 }} sx={styles.dialogText}>
+      <Typography align="left" fontSize={{ lg: 25, md: 20, sm: 18, xs: 12 }} sx={styles.dialogText}>
         {visibleDialog}
       </Typography>
       <AttackOptions />

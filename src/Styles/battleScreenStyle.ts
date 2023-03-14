@@ -44,7 +44,7 @@ export const getPlayerPokemonStyle = (playerPokemonStyle: PlayerPokemonStyleStat
 export const getHPContainerStyle = (mewState: MewState) => ({
   display: mewState.show === true ? 'flex' : 'none',
   position: 'absolute',
-  top: '30%',
+  top: '34%',
   right: '10%'
 });
 
