@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {  PlayerState } from '../../types';
-
-
-
+import { PlayerState } from '../../types';
 
 const initialState: PlayerState = {
   playerName: '',
-  starterPokemon:  null,
+  starterPokemon: null,
   chosenAttack: null
 };
 

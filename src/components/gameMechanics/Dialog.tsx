@@ -77,7 +77,6 @@ export default function Dialog() {
   useEffect(() => {
     // disable the back button if you are in a battle or if you just got out of the battle. Also if it's the first dialog index.
     if (displayState == 'Battle' || (displayState == 'Game' && dialogIndex == 9) || dialogIndex === 0) {
-     
       setDisableBackBtn(true);
     } else {
       setDisableBackBtn(false);

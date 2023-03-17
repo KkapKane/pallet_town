@@ -30,7 +30,7 @@ export default function PokeDexScreen() {
   async function grabPokemon(name: string) {
     if (name == '') return;
     try {
-      let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
       setPokeData(response.data);
       setGif(response.data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']);
 
@@ -41,7 +41,7 @@ export default function PokeDexScreen() {
   }
   // fetches data from pokemon api from id
   async function grabPokemonByID(id: number) {
-    let response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
     setPokeData(response.data);
     setGif(response.data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']);
     setBG(response.data.types[0].type.name);
@@ -49,12 +49,12 @@ export default function PokeDexScreen() {
 
   // rolls a random number from 0 - 500 and fetch from api using that number as the ID
   async function grabRandomPokemon() {
-    let randomNumber = Math.floor(Math.random() * 500);
+    const randomNumber = Math.floor(Math.random() * 500);
 
     grabPokemonByID(randomNumber);
   }
 
-// determines which background is shown behind the pokemon in the pokedex by their type
+  // determines which background is shown behind the pokemon in the pokedex by their type
   function setBG(type: string | undefined) {
     switch (type) {
       case 'rock':
